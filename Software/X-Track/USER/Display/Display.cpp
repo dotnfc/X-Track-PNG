@@ -29,6 +29,8 @@
 static float Display_GetFPS(SCREEN_CLASS* scr, uint32_t loopNum);
 #endif
 
+extern "C" void lv_lpng_init(void);
+
 /**
   * @brief  显示初始化
   * @param  无
@@ -60,7 +62,8 @@ void Display_Init()
     lv_port_disp_init(&screen);
     lv_port_indev_init();
     lv_fs_if_init();
-
+    lv_lpng_init(); // .nfc
+    
     /* 背光渐亮 */
     HAL::Backlight_SetGradual(1000, 1000);
 }

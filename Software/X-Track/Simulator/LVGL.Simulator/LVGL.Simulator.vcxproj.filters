@@ -382,6 +382,9 @@
     <Filter Include="App\Pages\Startup">
       <UniqueIdentifier>{a9f7a372-994a-40ce-ad80-ef374e6e28fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib_lpng">
+      <UniqueIdentifier>{4a31a147-5585-4165-9a7b-51f239db9f6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lvgl\examples\get_started\lv_example_get_started.h">
@@ -1942,6 +1945,33 @@
     </ClCompile>
     <ClCompile Include="..\..\USER\App\Resource\Image\img_src_gps_arrow_default.c">
       <Filter>App\Resource\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\adler32.c">
+      <Filter>lib_lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\crc32.c">
+      <Filter>lib_lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\infback.c">
+      <Filter>lib_lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\inffast.c">
+      <Filter>lib_lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\inflate.c">
+      <Filter>lib_lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\inftrees.c">
+      <Filter>lib_lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\lv_lpng.cpp">
+      <Filter>lib_lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\PNGdec.cpp">
+      <Filter>lib_lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="lv_lib\lv_lib_lpng\zutil.c">
+      <Filter>lib_lpng</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

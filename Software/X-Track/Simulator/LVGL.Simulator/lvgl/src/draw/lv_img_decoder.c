@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file lv_img_decoder.c
  *
  */
@@ -236,6 +236,11 @@ void lv_img_decoder_set_open_cb(lv_img_decoder_t * decoder, lv_img_decoder_open_
 void lv_img_decoder_set_read_line_cb(lv_img_decoder_t * decoder, lv_img_decoder_read_line_f_t read_line_cb)
 {
     decoder->read_line_cb = read_line_cb;
+}
+
+void lv_img_decoder_set_draw_lbl_cb(lv_img_decoder_t* decoder, lv_img_decoder_draw_lbl_f_t draw_lbl_cb)
+{
+    decoder->draw_lbl_cb = draw_lbl_cb;
 }
 
 /**

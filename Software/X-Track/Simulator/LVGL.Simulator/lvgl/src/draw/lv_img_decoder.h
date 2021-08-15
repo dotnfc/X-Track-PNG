@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file lv_img_decoder.h
  *
  */
@@ -37,6 +37,19 @@ enum {
     LV_IMG_SRC_SYMBOL, /** Symbol (@ref lv_symbol_def.h)*/
     LV_IMG_SRC_UNKNOWN, /** Unknown source*/
 };
+
+//- .nfc
+typedef struct _lv_image_draw_context_t
+{
+    lv_coord_t x, y;
+    lv_coord_t y1, y2; // mask_com
+    const char* img_path;
+    uint8_t* buf;
+    lv_area_t* line;
+    bool hasAlpha;
+    const lv_area_t* clip_area;
+    const void* draw_dsc;
+} lv_decoder_draw_context_t;
 
 typedef uint8_t lv_img_src_t;
 
@@ -82,12 +95,19 @@ typedef lv_res_t (*lv_img_decoder_read_line_f_t)(struct _lv_img_decoder_t * deco
  */
 typedef void (*lv_img_decoder_close_f_t)(struct _lv_img_decoder_t * decoder, struct _lv_img_decoder_dsc_t * dsc);
 
+/**
+ * Draw image lines one by one, by decoding on the fly
+ * @param decoder pointer to the decoder the function associated with
+ * @param dsc pointer to decoder descriptor
+ */
+typedef void (*lv_img_decoder_draw_lbl_f_t)(struct _lv_img_decoder_t* decoder, struct _lv_img_decoder_dsc_t* dsc, lv_decoder_draw_context_t *lv_draw_ctx);
 
 typedef struct _lv_img_decoder_t {
     lv_img_decoder_info_f_t info_cb;
     lv_img_decoder_open_f_t open_cb;
     lv_img_decoder_read_line_f_t read_line_cb;
     lv_img_decoder_close_f_t close_cb;
+    lv_img_decoder_draw_lbl_f_t draw_lbl_cb; /// .nfc
 
 #if LV_USE_USER_DATA
     void * user_data;
@@ -217,6 +237,13 @@ void lv_img_decoder_set_open_cb(lv_img_decoder_t * decoder, lv_img_decoder_open_
  * @param read_line_cb a function to read a line of an image
  */
 void lv_img_decoder_set_read_line_cb(lv_img_decoder_t * decoder, lv_img_decoder_read_line_f_t read_line_cb);
+
+/**
+ * Set a callback to a decoded image line-by-line when drawing
+ * @param decoder pointer to an image decoder
+ * @param read_line_cb a function to read a line of an image
+ */
+void lv_img_decoder_set_draw_lbl_cb(lv_img_decoder_t* decoder, lv_img_decoder_draw_lbl_f_t draw_lbl_cb);
 
 /**
  * Set a callback to close a decoding session. E.g. close files and free other resources.

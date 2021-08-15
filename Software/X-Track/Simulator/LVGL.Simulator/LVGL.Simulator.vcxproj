@@ -1,34 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3CA6E070-4AC1-475E-BB17-CF29AE4806DF}</ProjectGuid>
     <RootNamespace>LVGL</RootNamespace>
     <MileProjectType>ConsoleApplication</MileProjectType>
     <MileProjectManifestFile>LVGL.Simulator.manifest</MileProjectManifestFile>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <EnableASAN>true</EnableASAN>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <EnableASAN>false</EnableASAN>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <EnableASAN>true</EnableASAN>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <EnableASAN>false</EnableASAN>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <EnableASAN>true</EnableASAN>
+    <EnableASAN>false</EnableASAN>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <EnableASAN>false</EnableASAN>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <EnableASAN>true</EnableASAN>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <EnableASAN>false</EnableASAN>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="Mile.Project\Mile.Project.Cpp.props" />
   <Import Project="Mile.Project\Mile.Project.Cpp.VC-LTL.props" />
@@ -65,6 +74,8 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\USER\App;$(ProjectDir)..\..\USER\App\Utils\ArduinoJson\src</AdditionalIncludeDirectories>
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ProgramDatabase</DebugInformationFormat>
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4800</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4800</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -588,6 +599,15 @@
     <ClCompile Include="lv_fs_if\lv_fs_if.c" />
     <ClCompile Include="lv_fs_if\lv_fs_pc.c" />
     <ClCompile Include="lv_fs_if\lv_fs_posix.c" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\adler32.c" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\crc32.c" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\infback.c" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\inffast.c" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\inflate.c" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\inftrees.c" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\lv_lpng.cpp" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\PNGdec.cpp" />
+    <ClCompile Include="lv_lib\lv_lib_lpng\zutil.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\USER\App\Common\DataProc\DP_LIST.inc" />

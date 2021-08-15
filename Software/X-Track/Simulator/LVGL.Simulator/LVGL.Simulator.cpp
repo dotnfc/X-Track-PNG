@@ -35,12 +35,14 @@
 // Restore compilation warnings.
 #pragma warning(pop)
 #endif
+extern "C" void lv_lpng_init(void);
 
 int main()
 {
     lv_init();
 
     lv_fs_if_init();
+    lv_lpng_init(); // .nfc
 
     if (!lv_win32_init(
         GetModuleHandleW(NULL),

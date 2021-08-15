@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file lv_draw_img.c
  *
  */
@@ -34,7 +34,7 @@ LV_ATTRIBUTE_FAST_MEM static lv_res_t lv_img_draw_core(const lv_area_t * coords,
                                                        const void * src,
                                                        const lv_draw_img_dsc_t * draw_dsc);
 
-LV_ATTRIBUTE_FAST_MEM static void lv_draw_map(const lv_area_t * map_area, const lv_area_t * clip_area,
+LV_ATTRIBUTE_FAST_MEM void lv_draw_map(const lv_area_t * map_area, const lv_area_t * clip_area,
                                               const uint8_t * map_p,
                                               const lv_draw_img_dsc_t * draw_dsc,
                                               bool chroma_key, bool alpha_byte);
@@ -275,21 +275,45 @@ LV_ATTRIBUTE_FAST_MEM static lv_res_t lv_img_draw_core(const lv_area_t * coords,
 
         lv_draw_map(coords, &mask_com, cdsc->dec_dsc.img_data, draw_dsc, chroma_keyed, alpha_byte);
     }
+    /*we have encoder to decode line-by-line when drawing*/
+    else if (cdsc->dec_dsc.decoder->draw_lbl_cb) {
+        lv_area_t mask_com; /*Common area of mask and coords*/
+        bool union_ok;
+        union_ok = _lv_area_intersect(&mask_com, clip_area, coords);
+        /*Out of mask. There is nothing to draw so the image is drawn successfully.*/
+        if (union_ok == false) {
+            draw_cleanup(cdsc);
+            return LV_RES_OK;
+        }
+
+        lv_area_t line;
+        lv_area_copy(&line, &mask_com);
+        lv_area_set_height(&line, 1);
+        int32_t x = mask_com.x1 - coords->x1;
+        int32_t y = mask_com.y1 - coords->y1;
+        lv_decoder_draw_context_t lv_draw_ctx = {
+            .x = x,            .y = y,
+            .y1 = mask_com.y1, .y2 = mask_com.y2,
+            .line = &line, .clip_area = clip_area,
+            .img_path = src, .draw_dsc = draw_dsc
+        };
+        cdsc->dec_dsc.decoder->draw_lbl_cb(cdsc->dec_dsc.decoder, &cdsc->dec_dsc, &lv_draw_ctx);
+    }
     /*The whole uncompressed image is not available. Try to read it line-by-line*/
     else {
         lv_area_t mask_com; /*Common area of mask and coords*/
         bool union_ok;
         union_ok = _lv_area_intersect(&mask_com, clip_area, coords);
         /*Out of mask. There is nothing to draw so the image is drawn successfully.*/
-        if(union_ok == false) {
+        if (union_ok == false) {
             draw_cleanup(cdsc);
             return LV_RES_OK;
         }
 
         int32_t width = lv_area_get_width(&mask_com);
 
-        uint8_t  * buf = lv_mem_buf_get(lv_area_get_width(&mask_com) *
-                                         LV_IMG_PX_SIZE_ALPHA_BYTE);  /*+1 because of the possible alpha byte*/
+        uint8_t* buf = lv_mem_buf_get(lv_area_get_width(&mask_com) *
+            LV_IMG_PX_SIZE_ALPHA_BYTE);  /*+1 because of the possible alpha byte*/
 
         lv_area_t line;
         lv_area_copy(&line, &mask_com);
@@ -324,6 +348,7 @@ LV_ATTRIBUTE_FAST_MEM static lv_res_t lv_img_draw_core(const lv_area_t * coords,
     return LV_RES_OK;
 }
 
+
 /**
  * Draw a color map to the display (image)
  * @param cords_p coordinates the color map
@@ -333,7 +358,7 @@ LV_ATTRIBUTE_FAST_MEM static lv_res_t lv_img_draw_core(const lv_area_t * coords,
  * @param chroma_keyed true: enable transparency of LV_IMG_LV_COLOR_TRANSP color pixels
  * @param alpha_byte true: extra alpha byte is inserted for every pixel
  */
-LV_ATTRIBUTE_FAST_MEM static void lv_draw_map(const lv_area_t * map_area, const lv_area_t * clip_area,
+LV_ATTRIBUTE_FAST_MEM void lv_draw_map(const lv_area_t * map_area, const lv_area_t * clip_area,
                                               const uint8_t * map_p,
                                               const lv_draw_img_dsc_t * draw_dsc,
                                               bool chroma_key, bool alpha_byte)

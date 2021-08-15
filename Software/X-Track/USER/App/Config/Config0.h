@@ -81,7 +81,7 @@
 
 /* Battery */
 #define CONFIG_BAT_DET_PIN          PA1
-#define CONFIG_BAT_CHG_DET_PIN      PA11
+#define CONFIG_BAT_CHG_DET_PIN      PB8 // <=PA11
 
 /* Buzzer */
 #define CONFIG_BUZZ_PIN             PA0  // TIM2
@@ -93,8 +93,8 @@
 #define CONFIG_GPS_RX_PIN           PA2
 
 /* IMU */
-#define CONFIG_IMU_INT1_PIN         PB10
-#define CONFIG_IMU_INT2_PIN         PB11
+#define CONFIG_IMU_INT1_PIN         PB9  // <=PB10
+#define CONFIG_IMU_INT2_PIN         PC13 // <=PB11
 
 /* I2C */
 #define CONFIG_MCU_SDA_PIN          PB7
@@ -106,16 +106,16 @@
 #define CONFIG_ENCODER_PUSH_PIN     PB3
 
 /* Power */
-#define CONFIG_POWER_EN_PIN         PA12
+#define CONFIG_POWER_EN_PIN         PB2  // <=PA12
 
 /* Debug USART */
-#define CONFIG_DEBUG_SERIAL         Serial
-#define CONFIG_DEBUG_RX_PIN         PA10
-#define CONFIG_DEBUG_TX_PIN         PA9
+#define CONFIG_DEBUG_SERIAL         Serial3 // <=Serial
+#define CONFIG_DEBUG_RX_PIN         PB11 // <=PA10
+#define CONFIG_DEBUG_TX_PIN         PB10 // <=PA9
 
 /* SD CARD */
 #define CONFIG_SD_SPI               SPI_2
-#define CONFIG_SD_CD_PIN            PA8
+#define CONFIG_SD_CD_PIN            PA15 // <=PA8
 #define CONFIG_SD_MOSI_PIN          PB15
 #define CONFIG_SD_MISO_PIN          PB14
 #define CONFIG_SD_SCK_PIN           PB13
