@@ -219,6 +219,7 @@ void decoder_draw_lbl(struct _lv_img_decoder_t* decoder, struct _lv_img_decoder_
         return;
     }
 
+    //- LV_HOR_RES * 3 => 256 * 2: tile width with 565 encoded[2021/08/16]
     uint8_t* buf = (uint8_t*)lv_mem_buf_get(LV_HOR_RES * 3 /* RGB.2 A.1 */);
     if (buf == NULL) {
         g_Png.close();
